@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OAuth Connect</title>
+  <style>
+    body { background: #111; color: white; text-align: center; font-family: sans-serif; }
+    button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Login with:</h1>
+  <button onclick="window.location.href='/api/auth/twitter'">Connect Twitter</button>
+  <button onclick="window.location.href='/api/auth/discord'">Connect Discord</button>
+  <button onclick="window.location.href='/api/auth/youtube'">Connect YouTube</button>
+  <br /><br />
+  <div id="user-info"></div>
+  <script>
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) {
+          document.getElementById('user-info').innerHTML = `
+            <p>Logged in as: ${data.user.name}</p>
+            <button onclick="window.location.href='/api/logout'">Logout</button>
+          `;
+        }
+      });
+  </script>
+</body>
+</html>
